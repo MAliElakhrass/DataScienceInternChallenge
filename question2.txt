@@ -1,0 +1,26 @@
+Question 2
+
+a) The count is 54
+
+SELECT COUNT(*)
+FROM Orders
+INNER JOIN Shippers
+ON Orders.ShipperID = Shippers.ShipperID
+WHERE ShipperName = "Speedy Express";
+
+b) Peacock
+SELECT LastName FROM Employees
+WHERE EmployeeID IN (SELECT EmployeeID FROM Orders
+                    GROUP BY EmployeeID
+                    ORDER BY COUNT(*) DESC
+                    LIMIT 1);
+
+c) Boston Crab Meat
+SELECT p.ProductName, SUM(od.Quantity) FROM Orders o
+INNER JOIN Customers c ON o.CustomerID = c.CustomerID
+INNER JOIN OrderDetails od ON od.OrderID = o.OrderID
+INNER JOIN Products p ON p.ProductID = od.ProductID
+WHERE c.Country = 'Germany'
+GROUP BY p.ProductName
+ORDER BY 2 DESC
+LIMIT 1;
